@@ -9,14 +9,14 @@ http://blog.scottlogic.com/2015/12/24/creating-an-angular-2-build.html
 ## 初期構築メモ（2016/01/28）
 
 mkdir angular2-sample  
-cd angular2-sample  
-npm init  
-npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --save-dev 
-npm install systemjs --save-dev 
-npm install gulp --save-dev  
-npm install gulp-typescript del --save-dev  
-npm install typescript browserify --save-dev 
-type nul > gulpfile.js  
+`cd angular2-sample`  
+`npm init`  
+`npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --save-dev` 
+`npm install systemjs --save-dev`  
+`npm install gulp --save-dev`  
+`npm install gulp-typescript del --save-dev`  
+`npm install typescript browserify --save-dev`  
+`type nul > gulpfile.js`  
 
 ```javascript
 const gulp = require('gulp');
@@ -41,7 +41,7 @@ gulp.task('build', ['compile']);
 gulp.task('default', ['build']);
 ```
 
-type nul > tsconfig.json  
+`type nul > tsconfig.json`  
 
 ```javascript
 {
@@ -67,7 +67,7 @@ type nul > tsconfig.json
 }
 ```
 
-npm install gulp-sourcemaps --save-dev 
+`npm install gulp-sourcemaps --save-dev`  
 
 ```javascript
 const sourcemaps = require('gulp-sourcemaps');
@@ -118,7 +118,7 @@ gulp.task('copy:assets', ['clean'], function() {
 ```
 
 
-npm install tslint gulp-tslint --save-dev 
+`npm install tslint gulp-tslint --save-dev`  
 
 ```javascript
 const tslint = require('gulp-tslint');
@@ -148,7 +148,7 @@ node_modules/
 dest/
 ```
 
-npm install gulp-webserver --save-dev
+`npm install gulp-webserver --save-dev`  
 
 ```javascript
 var webserver = require('gulp-webserver');
@@ -216,7 +216,5 @@ index.html
 </html>
 ```
 
-
-
-gulp build
-gulp server
+`gulp build`  
+`gulp server`  
