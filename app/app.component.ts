@@ -1,5 +1,6 @@
 import {Component}             from 'angular2/core';
 import {Person}                from './person';
+import {Injectable}            from 'angular2/core';
 import {PersonDetailComponent} from './person-detail.component';
 import {PersonService}         from './person.service';
 
