@@ -11,11 +11,11 @@ http://blog.scottlogic.com/2015/12/24/creating-an-angular-2-build.html
 mkdir angular2-sample  
 cd angular2-sample  
 npm init  
-npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --dev-save  
-npm install systemjs --dev-save  
+npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --save-dev 
+npm install systemjs --save-dev 
 npm install gulp --save-dev  
 npm install gulp-typescript del --save-dev  
-npm install typescript browserify --dev-save  
+npm install typescript browserify --save-dev 
 type nul > gulpfile.js  
 
 ```javascript
@@ -67,7 +67,7 @@ type nul > tsconfig.json
 }
 ```
 
-npm install gulp-sourcemaps --dev-save  
+npm install gulp-sourcemaps --save-dev 
 
 ```javascript
 const sourcemaps = require('gulp-sourcemaps');
@@ -94,8 +94,7 @@ gulp.task('copy:libs', ['clean'], function() {
       'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/rxjs/bundles/Rx.js',
-      'node_modules/angular2/bundles/angular2.dev.js',
-      'node_modules/angular2/bundles/router.dev.js'
+      'node_modules/angular2/bundles/angular2.dev.js'
     ])
     .pipe(gulp.dest('dest/lib'))
 });
@@ -110,17 +109,16 @@ gulp.task('copy:assets', ['clean'], function() {
 これで下記のようにHTMLからロードできる。  
 
 ```html
-<script src="lib/es6-shim.min.js"></script>
-<script src="lib/system-polyfills.js"></script>
-<script src="lib/angular2-polyfills.js"></script>
-<script src="lib/system.src.js"></script>
-<script src="lib/Rx.js"></script>
-<script src="lib/angular2.dev.js"></script>
-<script src="lib/router.dev.js"></script>
+<script src="/lib/es6-shim.min.js"></script>
+<script src="/lib/system-polyfills.js"></script>
+<script src="/lib/angular2-polyfills.js"></script>
+<script src="/lib/system.src.js"></script>
+<script src="/lib/Rx.js"></script>
+<script src="/lib/angular2.dev.js"></script>
 ```
 
 
-npm install tslint gulp-tslint --dev-save  
+npm install tslint gulp-tslint --save-dev 
 
 ```javascript
 const tslint = require('gulp-tslint');
@@ -149,3 +147,37 @@ type nul > .gitignore
 node_modules/
 dest/
 ```
+
+npm install gulp-webserver --save-dev
+
+```javascript
+var webserver = require('gulp-webserver');
+
+gulp.task('server', function() {
+  gulp.src('./dest/')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+});
+```
+
+以下の4ファイルを作成  
+  
+app/app.component.ts  
+```typescript
+```
+
+app/boot.ts
+```typescript
+```
+
+index.html
+```html
+```
+
+
+
+gulp build
+gulp server

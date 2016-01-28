@@ -1,12 +1,30 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <script src="./node_modules/angular2/bundles/angular2-polyfills.js"></script>
-  <title>Angular 2 Advent Calendar 2015</title>
-</head>
-<body>
-  <my-app>Loading…</my-app>
-  <script src="./bundle.js"></script>
-</body>
+<html>
+  <head>
+    <title>Angular 2 QuickStart</title>
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="/lib/es6-shim.min.js"></script>
+    <script src="/lib/system-polyfills.js"></script>
+    <script src="/lib/angular2-polyfills.js"></script>
+    <script src="/lib/system.src.js"></script>
+    <script src="/lib/Rx.js"></script>
+    <script src="/lib/angular2.dev.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script>
+      System.config({
+        packages: {        
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+          }
+        }
+      });
+      System.import('app/boot')
+            .then(null, console.error.bind(console));
+    </script>
+  </head>
+  <!-- 3. Display the application -->
+  <body>
+    <my-app>Loading...</my-app>
+  </body>
 </html>

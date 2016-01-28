@@ -4,6 +4,7 @@ const typescript = require('gulp-typescript');
 const tsConfig = require('./tsconfig.json');
 const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
+var webserver = require('gulp-webserver');
 
 // clean the contents of the distribution directory
 gulp.task('clean', function () {
@@ -27,8 +28,7 @@ gulp.task('copy:libs', ['clean'], function() {
       'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/rxjs/bundles/Rx.js',
-      'node_modules/angular2/bundles/angular2.dev.js',
-      'node_modules/angular2/bundles/router.dev.js'
+      'node_modules/angular2/bundles/angular2.dev.js'
     ])
     .pipe(gulp.dest('dest/lib'))
 });
@@ -47,3 +47,11 @@ gulp.task('tslint', function() {
 gulp.task('build', ['tslint', 'compile', 'copy:libs', 'copy:assets']);
 gulp.task('default', ['build']);
 
+gulp.task('server', function() {
+  gulp.src('./dest/')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+});
