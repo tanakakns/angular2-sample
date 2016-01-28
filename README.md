@@ -1,0 +1,151 @@
+Angular2 Sample
+===
+
+https://angular.io/
+http://www.angular2.com/
+参考：angular2-gulp
+http://blog.scottlogic.com/2015/12/24/creating-an-angular-2-build.html
+
+## 初期構築メモ（2016/01/28）
+
+mkdir angular2-sample
+cd angular2-sample
+npm init
+npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --dev-save
+npm install systemjs --dev-save
+npm install gulp --save-dev
+npm install gulp-typescript del --save-dev
+npm install typescript browserify --dev-save
+type nul > gulpfile.js
+
+```javascript
+const gulp = require('gulp');
+const del = require('del');
+const typescript = require('gulp-typescript');
+const tsConfig = require('./tsconfig.json');
+
+// clean the contents of the distribution directory
+gulp.task('clean', function () {
+  return del('dest/**/*');
+});
+
+// TypeScript compile
+gulp.task('compile', ['clean'], function () {
+  return gulp
+    .src('app/**/*.ts')
+    .pipe(typescript(tsConfig.compilerOptions))
+    .pipe(gulp.dest('dest/app'));
+});
+
+gulp.task('build', ['compile']);
+gulp.task('default', ['build']);
+```
+
+type nul > tsconfig.json
+
+```javascript
+{
+  "compilerOptions": {
+    "outDir": "dest/app",
+    "target": "ES5",
+    "module": "system",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "removeComments": false,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true
+  },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./app/**/*.ts"
+    ]
+}
+```
+
+npm install gulp-sourcemaps --dev-save
+
+```javascript
+const sourcemaps = require('gulp-sourcemaps');
+...
+
+// TypeScript compile
+gulp.task('compile', ['clean'], function () {
+  return gulp
+    .src(tsConfig.files)
+    .pipe(sourcemaps.init())          // <--- sourcemaps
+    .pipe(typescript(tsConfig.compilerOptions))
+    .pipe(sourcemaps.write('.'))      // <--- sourcemaps
+    .pipe(gulp.dest('dest/app'));
+});
+```
+
+jsのロードを使いやすくする。
+
+```javascript
+gulp.task('copy:libs', ['clean'], function() {
+  return gulp.src([
+      'node_modules/es6-shim/es6-shim.min.js',
+      'node_modules/systemjs/dist/system-polyfills.js',
+      'node_modules/angular2/bundles/angular2-polyfills.js',
+      'node_modules/systemjs/dist/system.src.js',
+      'node_modules/rxjs/bundles/Rx.js',
+      'node_modules/angular2/bundles/angular2.dev.js',
+      'node_modules/angular2/bundles/router.dev.js'
+    ])
+    .pipe(gulp.dest('dest/lib'))
+});
+
+// copy static assets - i.e. non TypeScript compiled source
+gulp.task('copy:assets', ['clean'], function() {
+  return gulp.src(['app/**/*', 'index.html', 'styles.css', '!app/**/*.ts'], { base : './' })
+    .pipe(gulp.dest('dest'))
+});
+```
+
+これで下記のようにHTMLからロードできる。
+
+```html
+<script src="lib/es6-shim.min.js"></script>
+<script src="lib/system-polyfills.js"></script>
+<script src="lib/angular2-polyfills.js"></script>
+<script src="lib/system.src.js"></script>
+<script src="lib/Rx.js"></script>
+<script src="lib/angular2.dev.js"></script>
+<script src="lib/router.dev.js"></script>
+```
+
+
+npm install tslint gulp-tslint --dev-save
+
+```javascript
+const tslint = require('gulp-tslint');
+...
+
+gulp.task('tslint', function() {
+  return gulp.src('app/**/*.ts')
+    .pipe(tslint())
+    .pipe(tslint.report('verbose'));
+});
+...
+
+gulp.task('build', ['tslint', 'compile', 'copy:libs', 'copy:assets']);
+```
+
+package.jsonへ下記追加
+
+```javascript
+"scripts": {
+  "tslint": "tslint -c tslint.json app/**/*.ts",
+}
+```
+type nul > .gitignore
+.gitignoreを編集
+```
+node_modules/
+dest/
+```
