@@ -1,6 +1,17 @@
-import {Component} from 'angular2/core';
+import {Component}             from 'angular2/core';
+import {Person}                from './person';
+import {PersonDetailComponent} from './person-detail.component';
+
 @Component({
     selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>'
+    templateUrl: 'app/app.component.html',
+    directives: [PersonDetailComponent]
 })
-export class AppComponent { }
+export class AppComponent {
+
+		person: Person;
+
+		getPerson() {
+				this.person = new Person();
+		}
+}

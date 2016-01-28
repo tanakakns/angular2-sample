@@ -34,7 +34,7 @@ gulp.task('copy:libs', ['clean'], function() {
 });
 
 gulp.task('copy:assets', ['clean'], function() {
-  return gulp.src(['app/**/*', 'index.html', 'styles.css', '!app/**/*.ts'], { base : './' })
+  return gulp.src(['app/**/*', './**/*.html', 'styles.css', '!app/**/*.ts', '!./node_modules/**/*'], { base : './' })
     .pipe(gulp.dest('dest'))
 });
 

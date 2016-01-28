@@ -101,7 +101,7 @@ gulp.task('copy:libs', ['clean'], function() {
 
 // copy static assets - i.e. non TypeScript compiled source
 gulp.task('copy:assets', ['clean'], function() {
-  return gulp.src(['app/**/*', 'index.html', 'styles.css', '!app/**/*.ts'], { base : './' })
+  return gulp.src(['app/**/*', './**/*.html', 'styles.css', '!app/**/*.ts', '!./node_modules/**/*'], { base : './' })
     .pipe(gulp.dest('dest'))
 });
 ```
@@ -163,58 +163,6 @@ gulp.task('server', function() {
 });
 ```
 
-以下の4ファイルを作成  
-  
-app/app.component.ts  
-```typescript
-import {Component} from 'angular2/core';
-@Component({
-    selector: 'my-app',
-    template: '<h1>My First Angular 2 App</h1>'
-})
-export class AppComponent { }
-```
-
-app/boot.ts
-```typescript
-import {bootstrap}    from 'angular2/platform/browser'
-import {AppComponent} from './app.component'
-bootstrap(AppComponent);
-```
-
-index.html
-```html
-<html>
-  <head>
-    <title>Angular 2 QuickStart</title>
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
-    <script src="/lib/es6-shim.min.js"></script>
-    <script src="/lib/system-polyfills.js"></script>
-    <script src="/lib/angular2-polyfills.js"></script>
-    <script src="/lib/system.src.js"></script>
-    <script src="/lib/Rx.js"></script>
-    <script src="/lib/angular2.dev.js"></script>
-    <!-- 2. Configure SystemJS -->
-    <script>
-      System.config({
-        packages: {        
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          }
-        }
-      });
-      System.import('app/boot')
-            .then(null, console.error.bind(console));
-    </script>
-  </head>
-  <!-- 3. Display the application -->
-  <body>
-    <my-app>Loading...</my-app>
-  </body>
-</html>
-```
-
+実装して以下を実行。  
 `gulp build`  
 `gulp server`  
