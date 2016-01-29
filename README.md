@@ -6,7 +6,7 @@ http://www.angular2.com/
 
 ## 環境構築
 Node.jsをインストールしてnpmを導入する。  
-https://nodejs.org/　　
+https://nodejs.org/  
 
 ## 初期構築メモ（2016/01/28）
 プロジェクトディレクトリを作成する。  
@@ -21,7 +21,7 @@ npmプロジェクトの初期化とプラグインを導入する。
 `npm install gulp-typescript del --save-dev`  
 `npm install typescript browserify --save-dev`
 
-gulpfileを作成する。    
+gulpfileを作成する。  
 `type nul > gulpfile.js`  
 ```javascript
 const gulp = require('gulp');
