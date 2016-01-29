@@ -98,7 +98,8 @@ gulp.task('copy:libs', ['clean'], function() {
       'node_modules/angular2/bundles/angular2-polyfills.js',
       'node_modules/systemjs/dist/system.src.js',
       'node_modules/rxjs/bundles/Rx.js',
-      'node_modules/angular2/bundles/angular2.dev.js'
+      'node_modules/angular2/bundles/angular2.dev.js',
+      'node_modules/angular2/bundles/http.dev.js'
     ])
     .pipe(gulp.dest('dest/lib'))
 });
@@ -118,6 +119,7 @@ gulp.task('copy:assets', ['clean'], function() {
 <script src="/lib/system.src.js"></script>
 <script src="/lib/Rx.js"></script>
 <script src="/lib/angular2.dev.js"></script>
+<script src="/lib/http.dev.js"></script>
 ```
 
 tslintプラグインを導入してgulpfile.jsを修正する。  
