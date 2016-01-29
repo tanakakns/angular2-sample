@@ -1,23 +1,28 @@
 Angular2 Sample
 ===
-
+参考：　　
 https://angular.io/  
 http://www.angular2.com/  
-参考：angular2-gulp  
-http://blog.scottlogic.com/2015/12/24/creating-an-angular-2-build.html  
+
+## 環境構築
+Node.jsをインストールしてnpmを導入する。  
+https://nodejs.org/　　
 
 ## 初期構築メモ（2016/01/28）
-
-mkdir angular2-sample  
+プロジェクトディレクトリを作成する。  
+`mkdir angular2-sample`  
 `cd angular2-sample`  
+
+npmプロジェクトの初期化とプラグインを導入する。  
 `npm init`  
 `npm install angular2@2.0.0-beta.1 es6-promise@^3.0.2 es6-shim@^0.33.3 reflect-metadata@0.1.2 rxjs@5.0.0-beta.0 zone.js@0.5.10 --save-dev` 
 `npm install systemjs --save-dev`  
 `npm install gulp --save-dev`  
 `npm install gulp-typescript del --save-dev`  
-`npm install typescript browserify --save-dev`  
-`type nul > gulpfile.js`  
+`npm install typescript browserify --save-dev`
 
+gulpfileを作成する。    
+`type nul > gulpfile.js`  
 ```javascript
 const gulp = require('gulp');
 const del = require('del');
@@ -41,8 +46,8 @@ gulp.task('build', ['compile']);
 gulp.task('default', ['build']);
 ```
 
+tsconfig.jsonファイルを作成する。  
 `type nul > tsconfig.json`  
-
 ```javascript
 {
   "compilerOptions": {
@@ -67,8 +72,8 @@ gulp.task('default', ['build']);
 }
 ```
 
+sourcemapプラグインを追加してgulpファイルを修正する。  
 `npm install gulp-sourcemaps --save-dev`  
-
 ```javascript
 const sourcemaps = require('gulp-sourcemaps');
 ...
@@ -84,8 +89,7 @@ gulp.task('compile', ['clean'], function () {
 });
 ```
 
-jsのロードを使いやすくする。  
-
+jsのロードを簡単にするためにgulpfile.jsを修正する。  
 ```javascript
 gulp.task('copy:libs', ['clean'], function() {
   return gulp.src([
@@ -106,8 +110,7 @@ gulp.task('copy:assets', ['clean'], function() {
 });
 ```
 
-これで下記のようにHTMLからロードできる。  
-
+これで下記のようにHTMLからロードできるようになる。  
 ```html
 <script src="/lib/es6-shim.min.js"></script>
 <script src="/lib/system-polyfills.js"></script>
@@ -117,9 +120,8 @@ gulp.task('copy:assets', ['clean'], function() {
 <script src="/lib/angular2.dev.js"></script>
 ```
 
-
+tslintプラグインを導入してgulpfile.jsを修正する。  
 `npm install tslint gulp-tslint --save-dev`  
-
 ```javascript
 const tslint = require('gulp-tslint');
 ...
@@ -134,22 +136,22 @@ gulp.task('tslint', function() {
 gulp.task('build', ['tslint', 'compile', 'copy:libs', 'copy:assets']);
 ```
 
-package.jsonへ下記追加  
-
+package.jsonへ下記追加する。  
 ```javascript
 "scripts": {
   "tslint": "tslint -c tslint.json app/**/*.ts",
 }
 ```
-type nul > .gitignore  
-.gitignoreを編集  
+
+.gitignoreファイルを作成する。  
+`type nul > .gitignore`  
 ```
 node_modules/
 dest/
 ```
 
+簡易サーバを導入してgulpfile.jsを修正する。  
 `npm install gulp-webserver --save-dev`  
-
 ```javascript
 var webserver = require('gulp-webserver');
 
