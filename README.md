@@ -1,6 +1,6 @@
 Angular2 Sample
 ===
-参考：　　
+## 参考
 https://angular.io/  
 http://www.angular2.com/  
 
